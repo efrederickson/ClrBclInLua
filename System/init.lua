@@ -9,3 +9,8 @@ require"System.Environment"
 require"System.Interface"
 require"System.Platform"
 require"System.ThrowHelper"
+require"System.StringHelper"
+require"System.String"
+
+require"System.Text"
+require"System.Runtime"

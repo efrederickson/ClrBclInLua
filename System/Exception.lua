@@ -10,7 +10,7 @@ System.Exception = {
         return setmetatable({
             Message = arg[1] or "",
             InnerException = arg[2] or nil,
-            StackTrace = debug and debug.traceback() or "" -- TODO
+            StackTrace = debug and debug.traceback() or "" -- TODO: remove the first line (with the Exception:new call)
         }, { __index = self })
     end,
     
@@ -25,11 +25,9 @@ System.Exception = {
     ToString = function(self, full)
         full = full or true
         if full then
-            local text = self.Message
-            if text:len() > 1 then
-                text = self:GetType():ToString() .. ": " .. text
-            else
-                text = self:GetType():ToString()
+            local text = self:GetType():ToString()
+            if self.Message:len() > 1 then
+                text = text .. ": " .. self.Message
             end
             if self.InnerException then
                 text = text .. 

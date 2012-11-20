@@ -4,9 +4,12 @@ require"System"
 
 --print("Loaded System")
 
-function using(ns)
+function using(...)
+    local nss = { ... }
     local env = getfenv(2)
-    for k, v in pairs(ns) do
-        env[k] = v
+    for k, ns in pairs(nss) do
+        for k, v in pairs(ns) do
+            env[k] = v
+        end
     end
 end
