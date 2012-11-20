@@ -9,6 +9,9 @@ Currently, it has implemented:
 - Exceptions
 - A type system (Interfaces, Inheritance)
 - The base object class (System.Object)
+What won't be implemented:
+- MSIL Emitting classes/Assembly loading
+- Many of the classes that relied upon native code
 
 Issues:
 - Anything can be redefined or changed, there is no readonly object
