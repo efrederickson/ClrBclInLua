@@ -1,5 +1,6 @@
 System.Environment = {
     ClassName = "Environment",
+    Namespace = "System",
     
     NewLine = "\r\n",
     

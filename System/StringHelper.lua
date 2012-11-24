@@ -1,4 +1,11 @@
 System.StringHelper = {
+    ClassName = "StringHelper",
+    Namespace = "System",
+    
+    new = function(...)
+        System.ThrowHelper.Throw(System.Exception:new"Cannot create an instance of StringHelper")
+    end,
+    
     Trim = function(s)
         return System.StringHelper.TrimStart(System.StringHelper.TrimEnd(s))
     end,
@@ -82,8 +89,9 @@ System.StringHelper = {
     
     SwapCase = function(s)
         local s2 = ""
-        for k, char in pairs(System.String.StringHelper.ToCharArray(s)) do
-            s2 = s2 .. char:upper() == char and char:lower() or char:upper()
+        for i = 1, s:len() do
+            local char = s:sub(i, i)
+            s2 = s2 .. (char:upper() == char and char:lower() or char:upper())
         end
         return s2
     end,
@@ -149,4 +157,50 @@ System.StringHelper = {
         -- Adding one because 4 - 2 == 2, but IndexOf('asdf', 'df') == 3
         return System.StringHelper.IndexOf(s, ew) == s:len() - ew:len() + 1
     end,
+    
+    Substring = function(s, start, len)
+        return s:sub(start, start + len - 1)
+    end,
+    
+    IndexOfAny = function(str, chars)
+        local index = -1
+        for k, v in pairs(chars) do
+            local i = System.String.IndexOf(str, v)
+            if i < index or index == -1 then
+                index = i
+            end
+        end
+        return index
+    end,
+    
+    LastIndexOf = function(s, find, pos)
+        pos = pos or 1
+        for i = s:len(), pos, -1 do
+            if s:sub(i, i + find:len() - 1) == find then
+                return i
+            end
+        end
+        return -1
+    end,
+    
+    LastIndexOfAny = function(str, chars)
+        local index = -1
+        for k, v in pairs(chars) do
+            local i = System.String.LastIndexOf(str, v)
+            if i > index or index == -1 then
+                index = i
+            end
+        end
+        return index
+    end,
+    
+    Replace = function(s, old, new)
+        local s2 = s
+        while System.StringHelper.IndexOf(s2, old) ~= -1 do
+            s2 = s2:sub(1, System.StringHelper.IndexOf(s2, old) - 1) .. new .. s2:sub(System.StringHelper.IndexOf(s2, old) + old:len())
+        end
+        return s2
+    end,
 }
+
+setmetatable(System.StringHelper, { __index = System.Object })

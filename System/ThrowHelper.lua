@@ -1,5 +1,6 @@
 System.ThrowHelper = {
     ClassName = "ThrowHelper",
+    Namespace = "System",
     
     new = function(...)
         System.ThrowHelper.Throw(Exception:new("Cannot create an instance of System.Environment - it is static"))

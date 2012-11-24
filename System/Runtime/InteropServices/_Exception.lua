@@ -2,6 +2,9 @@ System.Runtime = System.Runtime or { }
 System.Runtime.InteropServices = System.Runtime.InteropServices or { }
 
 System.Runtime.InteropServices._Exception = { 
+    ClassName = "_Exception",
+    Namespace = "System.Runtime.InteropServices",
+    
     Message = "",
     StackTrace = "",
     HelpLink = "",

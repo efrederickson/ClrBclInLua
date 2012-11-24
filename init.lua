@@ -1,10 +1,11 @@
 package.path = "./?/init.lua;" .. package.path
 
+bit = require"luanumber-bit"
 require"System"
 
 --print("Loaded System")
 
-function using(...)
+function use(...)
     local nss = { ... }
     local env = getfenv(2)
     for k, ns in pairs(nss) do

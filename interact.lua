@@ -4,7 +4,7 @@
 -- will try to print out tables recursively, subject to the pretty_print_limit value.
 -- Steve Donovan, 2007
 --
--- Edited to include system and header
+-- Edited to include the ClrBclInLua, changed header, and changed table handling
 --
 local pretty_print_limit = 20
 local max_depth = 7
@@ -109,7 +109,7 @@ function val2str(val)
     if tp == 'function' then
         return tostring(val)
     elseif tp == 'table' then
-        if val.__tostring  then
+        if getmetatable(val) and getmetatable(val).__tostring then
             return tostring(val)
         else
             return '{'..join(val,',')..'}'

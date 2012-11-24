@@ -7,7 +7,7 @@ System.Object = {
     IsClass = true,
     
     new = function(self, ...)
-        return setmetatable({ }, { __index = self })
+        return setmetatable({ }, System.GetStandardMetatable(self))
     end,
     
     Dispose = function(self)
@@ -25,19 +25,15 @@ System.Object = {
     end,
     
     GetHashCode = function(self)
-    
+        return 0
     end,
     
     GetType = function(self)
         return System.Type:new(self)
     end,
     
-    Equals = function(self, other)
-        if self.ClassName ~= other.ClassName then return false end
-    end,
-    
     Equals = function(a, b)
-        return a == b or (a ~= nil and b ~= nil and a:Equals(b))
+        return a == b or (a ~= nil and b ~= nil and false)
     end,
     
     ReferenceEquals = function(a, b)
@@ -50,13 +46,23 @@ System.Object = {
     
     IsA = function(self, name)
         local type = self:GetType()
-        --System.ThrowHelper.Throw(Exception:new("Not implemented"))
         return type.FullName == name or type:InheritsClass(name)
     end,
     
     Is = function(self, name)
         return self:IsA(name)
     end,
+    
+    IndexOfAny = function(self, ...)
+        local chars = { ... }
+        if chars[1] and type(chars[1]) == "table" then
+            chars = chars[1]
+        end
+        return System.StringHelper.IndexOfAny(self.string, chars)
+    end
 }
 
-setmetatable(System.Object, { __tostring = function(o) return o:ToString() end })
+setmetatable(System.Object, { 
+    __tostring = function(o) return o:ToString() end, 
+    __eq = function(a, b) return (System.Object.IsObject(a) and a:Equals(b)) or (System.Object.IsObject(b) and b:Equals(a)) or Object.Equals(a, b) end
+})

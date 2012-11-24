@@ -3,14 +3,14 @@ System.Text = System.Text or { }
 System.Text.StringBuilder = {
     new = function(self, length)
         length = length or -1
+        local mt = System.GetStandardMetatable()
+        mt.__index = self
+        mt.__tostring = function(s) return s:ToString() end 
         return setmetatable({ 
             MaxLength = length,
             Length = 0,
             parts = { },
-            }, { 
-                __index = self, 
-                __tostring = function(s) return s:ToString() end 
-            })
+            }, mt)
     end,
     
     Append = function(self, obj)

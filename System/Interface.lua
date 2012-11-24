@@ -25,7 +25,7 @@ System.Interface = {
     end,
     
     GetType = function(self)
-        throw(Exception:new("Not implemented"))
+        return System.Type:new(self)
     end,
     
     Equals = function(self, other)
