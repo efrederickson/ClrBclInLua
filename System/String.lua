@@ -297,6 +297,16 @@ System.String = {
     TrimChars = function(self, ...)
         return System.String:new(System.StringHelper.TrimChars(self.string, ...))
     end,
+    
+    sub = function(self, a, b)
+        return string.sub(self, a, b)
+    end,
+    
+    ToNativeString = function(obj)
+        if System.String.IsString(obj) then return obj.string end
+        if type(obj) == "string" then return obj end
+        System.ThrowHelper.Throw(System.Exception:new(System.Resources.GetString("Argument_NotString2")))
+    end
 }
 System.String.Empty = System.String:new("")
 

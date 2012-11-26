@@ -1,5 +1,6 @@
 System.ArgumentException = {
     ClassName = "ArgumentException",
+    Inherits = System.Exception,
     
 }
 

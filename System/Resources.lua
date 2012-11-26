@@ -4,7 +4,7 @@ System.Resources = {
     CurrentLanguage = "en-US",
     
     new = function(...)
-        System.ThrowHelper.Throw(System.Exception:new"Cannot create an instance of System.Resources")
+        System.ThrowHelper.Throw(System.Exception:new(System.Resources.GetString'Class_CannotCreateStaticClass'))
     end,
     
     GetString = function(...)

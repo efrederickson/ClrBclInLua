@@ -1,6 +1,6 @@
 require"System.Runtime.InteropServices"
 
-local function fixTraceback(s)
+function System.FixTraceback(s)
     -- Removes the \System\Exception.lua:XXX: in function 'new'
     
     -- Should use System.Environment.NewLine instead, but debug.traceback
@@ -28,7 +28,7 @@ System.Exception = {
         return setmetatable({
             Message = arg[1] or "",
             InnerException = arg[2] or nil,
-            StackTrace = debug and fixTraceback(debug.traceback()) or ""
+            StackTrace = debug and System.FixTraceback(debug.traceback()) or ""
         }, mt)
     end,
     

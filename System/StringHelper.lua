@@ -3,7 +3,7 @@ System.StringHelper = {
     Namespace = "System",
     
     new = function(...)
-        System.ThrowHelper.Throw(System.Exception:new"Cannot create an instance of StringHelper")
+        System.ThrowHelper.Throw(System.Exception:new(System.Resources.GetString'Class_CannotCreateStaticClass'))
     end,
     
     Trim = function(s)

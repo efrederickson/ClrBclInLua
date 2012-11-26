@@ -1,7 +1,7 @@
 System.Object = { 
     ClassName = "Object",
     Namespace = "System",
-    Inherits = nil,
+    Inherits = System.Object,
     Implements = { },
     IsInterface = false,
     IsClass = true,
@@ -25,7 +25,21 @@ System.Object = {
     end,
     
     GetHashCode = function(self)
-        return 0
+        -- This is... horrible. To say the least.
+        local ret = 0
+        for k, v in pairs(self) do
+            if System.Object.IsObject(v) then
+                ret = ret * v:GetHashCode()
+            else
+                local x = tonumber(v) or (type(v) == "number" and v)
+                if x then 
+                    ret = (ret == 0 and 1 or ret) * x 
+                else
+                    ret = ret + 1
+                end
+            end
+        end
+        return ret
     end,
     
     GetType = function(self)
@@ -64,5 +78,5 @@ System.Object = {
 
 setmetatable(System.Object, { 
     __tostring = function(o) return o:ToString() end, 
-    __eq = function(a, b) return (System.Object.IsObject(a) and a:Equals(b)) or (System.Object.IsObject(b) and b:Equals(a)) or Object.Equals(a, b) end
+    __eq = function(a, b) return (System.Object.IsObject(a) and a:Equals(b)) or (System.Object.IsObject(b) and b:Equals(a)) end
 })

@@ -19,10 +19,15 @@ System.Type = {
         return self.FullName
     end,
     
-    InheritsClass = function(self, name)
+    InheritsClass = function(self, name, scanned)
+        scanned = scanned or { }
         local o = self.object
-        if o.Inherits then
-            return o.Inherits:GetType().FullName == name or Type.InheritsClass(o.Inherits:GetType(), name)
+        if self.FullName == name then
+            return true
+        end
+        scanned[#scanned + 1] = o
+        if o.Inherits and scanned[o.Inherits] == false then
+            return o.Inherits:GetType().FullName == name or Type.InheritsClass(o.Inherits:GetType(), name, scanned)
         end
         return false
     end,

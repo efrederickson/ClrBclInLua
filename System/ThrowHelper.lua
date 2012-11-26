@@ -3,7 +3,7 @@ System.ThrowHelper = {
     Namespace = "System",
     
     new = function(...)
-        System.ThrowHelper.Throw(Exception:new("Cannot create an instance of System.Environment - it is static"))
+        System.ThrowHelper.Throw(System.Exception:new(System.Resources.GetString'Class_CannotCreateStaticClass'))
     end,
     
     Throw = function(obj)

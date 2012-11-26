@@ -1,6 +1,8 @@
 package.path = "./?/init.lua;" .. package.path
 
-bit = require"luanumber-bit"
+if not bit then
+    bit = require"luanumber-bit"
+end
 require"System"
 
 --print("Loaded System")
