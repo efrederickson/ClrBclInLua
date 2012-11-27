@@ -207,7 +207,7 @@ LICENSE
 
 --]]
 
-local M = {_TYPE='module', _NAME='bit.numberlua', _VERSION='0.3.1.20120131'}
+local M = { } -- {_TYPE='module', _NAME='bit.numberlua', _VERSION='0.3.1.20120131'}
 
 local floor = math.floor
 
@@ -542,4 +542,5 @@ function M.bit.bswap(x)
   return bit_tobit(bswap(x % MOD))
 end
 
-return M
+--return M
+System.InternalBit = M

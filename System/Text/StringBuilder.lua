@@ -1,6 +1,9 @@
 System.Text = System.Text or { }
 
 System.Text.StringBuilder = {
+    ClassName = "StringBuilder",
+    Namespace = "System.Text",
+    
     new = function(self, length)
         length = length or -1
         local mt = System.GetStandardMetatable()

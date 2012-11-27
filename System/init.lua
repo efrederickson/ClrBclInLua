@@ -33,6 +33,8 @@ require 'System.Math'
 require 'System.MidpointRounding'
 require 'System.Double'
 require 'System.Complex'
+require 'System.InternalBit'
+require 'System.Bit'
 
 require 'System.Text'
 require 'System.Runtime'

@@ -1,14 +1,5 @@
 System.Globalization = System.Globalization or { }
 
-local bit = bit or bit32 -- test for already existing bit libraries
-pcall(function() if not bit then bit = require'bit' end end)
-
-if bit and bit.band and bit.bor and bit.lshift and bit.rshift then -- check if a suitable bit library was found
-    -- good.
-else
-    System.ThrowHelper.Throw(System.Exception:new(System.Resources.GetString("BitLibraryNotFound")))
-end
-
 System.Globalization.CharUnicodeInfo = {
     ClassName = "CharUnicodeInfo",
     Namespace = "System",
@@ -85,10 +76,10 @@ System.Globalization.CharUnicodeInfo = {
     end,
     
     InternalGetCategoryValue = function(ch, offset)
-        local num = System.Globalization.CharUnicodeInfo.s_pCategoryLevel1Index[bit.rshift(string.byte(ch), 8)]
-        num = System.Globalization.CharUnicodeInfo.s_pCategoryLevel1Index[num + bit.band(bit.rshift(ch, 4), 15)]
+        local num = System.Globalization.CharUnicodeInfo.s_pCategoryLevel1Index[System.Bit.RShift(string.byte(ch), 8)]
+        num = System.Globalization.CharUnicodeInfo.s_pCategoryLevel1Index[num + System.Bit.BAnd(System.Bit.RShift(ch, 4), 15)]
         local ptr = #System.Globalization.CharUnicodeInfo.s_pCategoryLevel1Index + num
-        local b = System.Globalization.CharUnicodeInfo.s_pCategoryLevel1Index[(ptr + bit.band(ch, 15)) / 1]
+        local b = System.Globalization.CharUnicodeInfo.s_pCategoryLevel1Index[(ptr + System.Bit.BAnd(ch, 15)) / 1]
         return System.Globalization.CharUnicodeInfo.s_pCategoriesValue[((b * 2) + offset) / 1]
     end,
     
