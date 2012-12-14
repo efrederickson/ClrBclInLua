@@ -2,3 +2,4 @@
 *.g.lua
 [Bb]in*/
 *.r.lua
+*BAK*/
