@@ -1432,6 +1432,13 @@ source = source .. [[
 ]] .. s .. '.Inherits = '
 
 local inherits = ast[i + 1]
+if inherits and inherits.AstType == 'AssignmentStatement' then
+    inherits = ast[i + 2]
+end
+--while inherits and inherits.AstType ~= 'CallStatement' do
+--    inherits = ast[i + 1]
+--    i = i + 1
+--end
 if not inherits then return end
 local wrote = false
 if inherits.AstType == 'CallStatement' then
@@ -1447,11 +1454,12 @@ if inherits.AstType == 'CallStatement' then
                     base = base.Base
                 end
                 tmp = base.Name .. tmp
-                if tmp ~= "System.__index" then
-                    source = source .. (tmp == "" and 'System.Object' or tmp).. '\r\n'
-                    wrote = true
-                    break
+                if tmp == "System.__index" then
+                    tmp = "System.Object"
                 end
+                source = source .. (tmp == "" and 'System.Object' or tmp).. '\r\n'
+                wrote = true
+                break
             end
         end
     end

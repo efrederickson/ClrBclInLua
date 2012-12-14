@@ -51,4 +51,4 @@ System.Interface = {
     end,
 }
 
-setmetatable(System.Interface, { __tostring = function(o) return o:Tostring() end })
+setmetatable(System.Interface, { __tostring = function(o) return o:ToString() end })

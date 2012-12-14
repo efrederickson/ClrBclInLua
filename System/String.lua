@@ -1,6 +1,4 @@
 System.String = {
-    ClassName = "String",
-    Namespace = "System",
     Empty = "",
     Implements = { System.IComparable, System.ICloneable, System.IConvertible,
         System.IEnumerable, System.IEquatable },
