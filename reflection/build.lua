@@ -1,0 +1,5 @@
+local f = io.open('GenerateReflectionInfo.lua', 'wb')
+f:write(io.open('Util.lua', 'rb'):read'*a')
+f:write(io.open('ParseLua.lua', 'rb'):read'*a')
+f:write(io.open('GenerateReflectionInfo.base.lua', 'rb'):read'*a')
+f:close()

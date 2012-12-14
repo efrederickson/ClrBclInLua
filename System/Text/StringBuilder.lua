@@ -1,5 +1,3 @@
-System.Text = System.Text or { }
-
 System.Text.StringBuilder = {
     ClassName = "StringBuilder",
     Namespace = "System.Text",

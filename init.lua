@@ -1,4 +1,4 @@
-package.path = "./?/init.lua;" .. package.path
+package.path = "./?/init.lua;./?/init.luac;./?.luac;" .. package.path
 
 if not bit then
     --bit = require"luanumber-bit"

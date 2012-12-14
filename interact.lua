@@ -4,8 +4,10 @@
 -- will try to print out tables recursively, subject to the pretty_print_limit value.
 -- Steve Donovan, 2007
 --
--- Edited to include the ClrBclInLua, changed header, and changed table handling
+-- Edited to include the ClrBclInLua, changed header, and changed table handling.
+-- Changed string loading to work with =<Expr>
 --
+
 local pretty_print_limit = 20
 local max_depth = 7
 local table_clever = true
@@ -92,7 +94,7 @@ local function join(tbl,delim,limit,depth)
             if k > limit then
                 res = res.." ... "
                 break
-            end            
+            end
         end
     end
     pop(jstack)
@@ -164,8 +166,15 @@ function eval_lua(line)
     -- is it an expression?
     local err,chunk = compile('_pretty_print('..line..')')
     if err then
-        -- otherwise, a statement?
-        err,chunk = compile(line)
+        -- an '=' expr?
+        if line:sub(1, 1) == "=" then
+            err,chunk=compile('print(' .. line:sub(2) .. ')')
+        end
+        
+        if err then
+            -- otherwise, a statement?
+            err,chunk = compile(line)
+        end
     end
     -- if compiled ok, then evaluate the chunk
     if not err then
@@ -189,7 +198,7 @@ function ilua.precision(len,prec,all)
         num_prec = '%'..len..'.'..prec..'f'
     end
     num_all = all
-end	
+end
 
 function ilua.table_options(t)
     if t.limit then pretty_print_limit = t.limit end
@@ -264,7 +273,7 @@ local function set_strict()
         declared[n] = true
         rawset(t, n, v)
     end
-      
+
     mt.__index = function (t, n)
         if not declared[n] and what() ~= "C" then
             local lookup = global_handler_fn and global_handler_fn(n)
@@ -281,14 +290,14 @@ end
 
 --- Initial operations which may not succeed!
 -- try to bring in any ilua configuration file; don't complain if this is unsuccessful
-pcall(function()    
+pcall(function()
     require 'ilua-defs'
 end)
 
 -- Unix readline support, if readline.so is available...
 local rl,readline,saveline
 err = pcall(function()
-    rl = require 'readline'  
+    rl = require 'readline'
     readline = rl.readline
     saveline = rl.add_history
 end)
@@ -303,12 +312,12 @@ end
 -- process command-line parameters
 if arg then
     local i = 1
-    
+
     local function parm_value(opt,parm,def)
         local val = parm:sub(3)
         if #val == 0 then
             i = i + 1
-            if i > #arg then 
+            if i > #arg then
                 if not def then
                     quit(-1,"expecting parameter for option '-"..opt.."'")
                 else
@@ -319,14 +328,14 @@ if arg then
         end
         return val
     end
-    
+
     while i <= #arg do
         local v = arg[i]
         local opt = v:sub(1,1)
         if opt == '-' then
-            opt = v:sub(2,2)			
+            opt = v:sub(2,2)
             if opt == 'h' then
-                quit(0,"ilua (-l lib) (-L lib) (lua files)")            
+                quit(0,"ilua (-l lib) (-L lib) (lua files)")
             elseif opt == 'l' then
                 require (parm_value(opt,v))
             elseif opt == 'L' then
@@ -358,19 +367,23 @@ if arg then
         i = i + 1
     end
 end
-    
+
 print "Interactive Lua prompt (ilua) "
-dofile"init.lua"
+
+package.path = "./?.luac;./?.lua;" .. package.path
+--dofile"init.lua"
+require'init'
+
 -- any import complaints?
 ilua.import()
 
 -- enable 'not declared' error
-if strict then 
+if strict then
     set_strict()
 end
 
 local line = readline(prompt)
-while line do    
+while line do
     if line == 'quit' then break end
     eval_lua(line)
     saveline(line)

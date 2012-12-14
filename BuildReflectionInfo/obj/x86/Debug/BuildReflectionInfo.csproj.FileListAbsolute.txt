@@ -1,0 +1,6 @@
+J:\ClrBclInLua\BuildReflectionInfo\obj\x86\Debug\BuildReflectionInfo.csprojResolveAssemblyReference.cache
+J:\ClrBclInLua\BuildReflectionInfo\bin\Debug\BuildReflectionInfo.exe.config
+J:\ClrBclInLua\BuildReflectionInfo\bin\Debug\BuildReflectionInfo.exe
+J:\ClrBclInLua\BuildReflectionInfo\bin\Debug\BuildReflectionInfo.pdb
+J:\ClrBclInLua\BuildReflectionInfo\obj\x86\Debug\BuildReflectionInfo.exe
+J:\ClrBclInLua\BuildReflectionInfo\obj\x86\Debug\BuildReflectionInfo.pdb
